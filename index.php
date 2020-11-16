@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if ((isset($_SESSION['isLogged'])) && ($_SESSION['isLogged'] = true))
+{
+    header('Location: account.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +17,26 @@
     <title>Bakery Shop</title>
 </head>
 <body>
+
+Panel logowania:
+<form action="login.php" method="post">
+Login: 
+<br> <input type="text" name="login"/> <br>
+Password: 
+<br> <input type="password" name="password"/> <br><br>
+<?php
+if(isset($_SESSION['loginError'])){
+echo $_SESSION['loginError'];
+}
+?>
+<br><input type="submit" value="Log in"/> <br>
+</form>
+
+<br><br>
+
     <h1>On-line order</h1>
 
-<form action="order.php" method="post">
+<form action="order.php" method="get">
     How much donuts (0,99$/pc):
     <input type="text" name="donuts"/>
     <br/><br/>

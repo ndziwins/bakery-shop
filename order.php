@@ -29,7 +29,7 @@ echo<<<END
                 <td>SUMMARY:</td>
                 <td>$sum $</td>
             </tr>
-        </table>;
+        </table>
         <br><a href="index.php">To main manu</a>
 END;
     ?>
