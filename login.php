@@ -21,8 +21,14 @@ else
 $login = $_POST['login'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM users WHERE BINARY email='$login' AND BINARY password='$password'";
-if ($result = @$connection->query($sql)) 
+$login = htmlentities($login, ENT_QUOTES, "UTF-8");
+$password = htmlentities($password, ENT_QUOTES, "UTF-8");
+
+if ($result = @$connection->query(
+sprintf("SELECT * FROM users WHERE email='%s' AND password='%s'",
+mysqli_real_escape_string($connection,$login),
+mysqli_real_escape_string($connection,$password)
+))) 
 {
     $usersNo = $result->num_rows;
     if ($usersNo>0)
