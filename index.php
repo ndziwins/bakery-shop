@@ -18,6 +18,9 @@ if ((isset($_SESSION['isLogged'])) && ($_SESSION['isLogged'] = true))
 </head>
 <body>
 
+<a href="register.php">Register new account</a>
+<br><br>
+
 Panel logowania:
 <form action="login.php" method="post">
 Login: 
