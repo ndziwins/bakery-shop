@@ -8,6 +8,11 @@ if ((isset($_SESSION['isLogged'])) && ($_SESSION['isLogged'] = true)) {
 
 
 if (isset($_POST['email'])) {
+
+    //remembering email if fail
+    $_SESSION['fr_email'] = $_POST['email'];
+    if(isset($_POST['regulations'])) $_SESSION['fr_regulations'] = true;
+
     //Sucessful validation
     $is_ok = true;
 
@@ -81,17 +86,22 @@ if (isset($_POST['email'])) {
                 $_SESSION['e_user'] = "There is user with that email in database.";
             }
 
+
+            if ($is_ok == true) {
+
+                if ($connection->query("INSERT INTO users VALUES (NULL, '$email', '$pass_hash')")) {
+                    $_SESSION['registrationCompleted'] = true;
+                    header('Location: newUser.php');
+                } else {
+                    throw new Exception($connection->error);
+                }
+            }
+
             $connection->close();
         }
     } catch (Exception $e) {
         echo '<span style="color:red;">Server error!</span><br>';
         echo $e;
-    }
-
-
-    if ($is_ok == true) {
-        echo "Validation completed!";
-        exit();
     }
 }
 
@@ -120,7 +130,10 @@ if (isset($_POST['email'])) {
 <body>
 
     <form method="post">
-        email: <br><input type="text" name="email" /> <br>
+        email: <br><input type="text" value="<?php
+        if (isset($_SESSION['fr_email'])) {
+            echo $_SESSION['fr_email'];
+            unset($_SESSION['fr_email']);}?>" name="email" /> <br>
 
         <?php
         if (isset($_SESSION['e_email'])) {
@@ -147,7 +160,12 @@ if (isset($_POST['email'])) {
 
         repeat password: <br><input type="password" name="password2" /> <br>
 
-        <label><input type="checkbox" name="regulations" /> Accept regulations</label>
+        <label><input type="checkbox" name="regulations" <?php
+                                                            if (isset($_SESSION['fr_regulations'])) 
+                                                            {
+                                                                echo "checked";
+                                                                unset($_SESSION['fr_regulations']);
+                                                            }?>/> Accept regulations</label>
         <?php
         if (isset($_SESSION['e_regul'])) {
             echo '<div class="error">' . $_SESSION['e_regul'] . '</div>';
