@@ -15,15 +15,18 @@ if ((isset($_SESSION['isLogged'])) && ($_SESSION['isLogged'] = true)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bakery Shop</title>
+
+    <script type="text/javascript" src="timer.js"></script>
+
 </head>
 
-<body>
+<body = onload="timeRefreshing();">
+
+    <div id="clock"></div>
+    <br><br>
 
     <a href="register.php">Register new account</a>
     <br><br>
-
-
-
 
     Panel logowania:
     <form action="login.php" method="post">
