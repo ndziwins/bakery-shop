@@ -18,11 +18,31 @@ if ((isset($_SESSION['isLogged'])) && ($_SESSION['isLogged'] = true)) {
 
     <script type="text/javascript" src="timer.js"></script>
 
+    <script type="text/javascript">
+
+    var numer = Math.floor(Math.random()*5)+1;
+
+    function changeSlide()
+    {
+        numer++; if (numer>5) numer=1;
+				
+        var file = "<img src=\"slides/slide" + numer + ".jpg\" />";
+        document.getElementById("slider").innerHTML = file;
+
+        setTimeout("changeSlide()", 2000);
+    }
+
+    </script>
+
 </head>
 
-<body = onload="timeRefreshing();">
+<body onload="timeRefreshing(); changeSlide();">
 
     <div id="clock"></div>
+    <br><br>
+
+    <div id="slider"></div>
+
     <br><br>
 
     <a href="register.php">Register new account</a>
